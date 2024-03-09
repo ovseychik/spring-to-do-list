@@ -13,43 +13,25 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private LocalDateTime timestamp;
-    private String text;
+    private String task;
     private Boolean isCompleted;
 
     public Task() {
-        isCompleted = false;
-        timestamp = LocalDateTime.now();
+    }
+
+    public String getTask() {
+        return task;
     }
 
     public Long getId() {
         return id;
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+    public void setTask(String task) {
+        this.task = task;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public Boolean getIsCompleted() {
-        return isCompleted;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public void setIsCompleted(Boolean completed) {
-        isCompleted = completed;
+    public void setCompleted(Boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 }
