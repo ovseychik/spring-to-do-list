@@ -23,7 +23,7 @@ public class TaskController {
     @GetMapping
     public String listTasks(Model model) {
         model.addAttribute("tasks", taskService.getAllTasks());
-        model.addAttribute("newTask", new Task());  // Add this line
+        model.addAttribute("newTask", new Task());
         return "tasks";
     }
 

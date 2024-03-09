@@ -17,6 +17,8 @@ public class Task {
     private Boolean isCompleted;
 
     public Task() {
+        this.isCompleted = false;
+        this.timestamp = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -27,7 +29,7 @@ public class Task {
         return timestamp;
     }
 
-    public String getTask() {
+    public String getText() {
         return text;
     }
 
@@ -43,7 +45,7 @@ public class Task {
         this.timestamp = timestamp;
     }
 
-    public void setTask(String text) {
+    public void setText(String text) {
         this.text = text;
     }
 
