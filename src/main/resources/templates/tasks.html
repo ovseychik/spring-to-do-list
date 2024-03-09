@@ -10,16 +10,18 @@
     <thead>
     <tr>
         <th>Status</th>
+        <th>Created at</th>
         <th>Task</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="task : ${tasks}">
+        <td th:text="${task.isCompleted} ? '✅' : '⏳'"></td>
         <td th:text="${task.text}"></td>
         <td>
-            <form th:action="@{/tasks/delete}" th:object="${task}" method="post">
-                <input type="hidden" th:field="*{id}"/>
+            <form th:action="@{/tasks/delete}" method="POST">
+                <input type="hidden" name="id" th:value="${task.id}"/>
                 <input type="submit" value="Delete"/>
             </form>
         </td>

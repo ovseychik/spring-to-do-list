@@ -17,8 +17,8 @@ public class Task {
     private Boolean isCompleted;
 
     public Task() {
-        isCompleted = false;
-        timestamp = LocalDateTime.now();
+        this.isCompleted = false;
+        this.timestamp = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -33,7 +33,7 @@ public class Task {
         return text;
     }
 
-    public Boolean getCompleted() {
+    public Boolean getIsCompleted() {
         return isCompleted;
     }
 
@@ -49,7 +49,7 @@ public class Task {
         this.text = text;
     }
 
-    public void setCompleted(Boolean completed) {
+    public void setIsCompleted(Boolean completed) {
         isCompleted = completed;
     }
 }
