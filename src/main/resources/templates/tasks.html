@@ -5,7 +5,13 @@
 </head>
 <body>
 <h1>Task List</h1>
+<h2>Add a new task</h2>
 
+<form th:action="@{/tasks}" th:object="${newTask}" method="POST">
+    <input type="text" th:field="*{text}" id="text" placeholder="New task" required/>
+    <input type="submit" value="Add Task"/>
+</form>
+<h2>Current tasks</h2>
 <table>
     <thead>
     <tr>
@@ -18,6 +24,7 @@
     <tbody>
     <tr th:each="task : ${tasks}">
         <td th:text="${task.isCompleted} ? '✅' : '⏳'"></td>
+        <td th:text="${task.timestamp}"></td>
         <td th:text="${task.text}"></td>
         <td>
             <form th:action="@{/tasks/delete}" method="POST">
@@ -29,12 +36,7 @@
     </tbody>
 </table>
 
-<h2>Add a new task</h2>
 
-<form th:action="@{/tasks}" th:object="${newTask}" method="POST">
-    <input type="text" th:field="*{text}" id="text" placeholder="New task" required/>
-    <input type="submit" value="Add Task"/>
-</form>
 
 </body>
 </html>
