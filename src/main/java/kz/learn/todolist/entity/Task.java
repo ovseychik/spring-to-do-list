@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +14,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private LocalDateTime timestamp;
+    @Lob
     private String text;
     private Boolean isCompleted;
 
@@ -33,7 +35,7 @@ public class Task {
         return text;
     }
 
-    public Boolean getCompleted() {
+    public Boolean getIsCompleted() {
         return isCompleted;
     }
 
@@ -49,7 +51,7 @@ public class Task {
         this.text = text;
     }
 
-    public void setCompleted(Boolean isCompleted) {
-        this.isCompleted = isCompleted;
+    public void setIsCompleted(Boolean completed) {
+        isCompleted = completed;
     }
 }
