@@ -14,7 +14,7 @@ public class Task {
     private Long id;
     private LocalDateTime timestamp;
     private String task;
-    private Boolean completed;
+    private Boolean isCompleted;
 
     public Task() {
     }
@@ -23,11 +23,15 @@ public class Task {
         return task;
     }
 
-    public void createTask(String task) {
+    public Long getId() {
+        return id;
+    }
+
+    public void setTask(String task) {
         this.task = task;
     }
 
-    public void setCompleted(Boolean completed) {
-        this.completed = completed;
+    public void setCompleted(Boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 }
