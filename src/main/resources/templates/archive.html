@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Completed Tasks</title>
+    <style>
+        table, th, td {
+            border: 1px solid grey;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<h1>Completed Tasks</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Completed at</th>
+        <th>Task</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.completedAt}"></td>
+        <td th:text="${task.text}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
