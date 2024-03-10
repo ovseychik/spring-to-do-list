@@ -14,6 +14,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private LocalDateTime timestamp;
+    private LocalDateTime completedAt;
     @Lob
     private String text;
     private Boolean isCompleted;
@@ -29,6 +30,15 @@ public class Task {
 
     public LocalDateTime getTimestamp() {
         return timestamp;
+    }
+
+
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
     }
 
     public String getText() {
