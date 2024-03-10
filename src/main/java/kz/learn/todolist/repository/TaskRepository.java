@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
@@ -19,7 +20,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query("SELECT t FROM Task t WHERE t.isCompleted = true")
     List<Task> findAllCompleted();
 
-    @Query("SELECT t FROM Task t WHERE t.isCompleted = true AND DATE(t.completedAt) = :date")
+    @Query("SELECT t FROM Task t WHERE t.isCompleted = true AND CAST(t.completedAt AS DATE) = :date")
     List<Task> findAllCompletedByDate(LocalDate date);
 
 }

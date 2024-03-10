@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -24,7 +26,10 @@ public class ArchiveController {
     }
 
     @GetMapping
-    public String listCompletedTasks(Model model, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public String listCompletedTasks(Model model,
+                                     @RequestParam(value = "date", required = false)
+                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+                                     LocalDate date) {
         List<Task> tasks;
         if (date != null) {
             tasks = archiveService.getCompletedTasksByDate(date);
