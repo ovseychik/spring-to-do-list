@@ -38,4 +38,11 @@ public class TaskController {
         taskService.deleteTask(id);
         return "redirect:/tasks";
     }
+
+    @PostMapping("/complete")
+    public String completeTask(@RequestParam("id") Long id) {
+        taskService.markAsCompleted(id);
+        return "redirect:/tasks";
+    }
+
 }

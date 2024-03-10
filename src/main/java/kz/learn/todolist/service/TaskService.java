@@ -28,4 +28,8 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
+    public void markAsCompleted(Long id) {
+        taskRepository.markAsCompleted(id);
+    }
+
 }
