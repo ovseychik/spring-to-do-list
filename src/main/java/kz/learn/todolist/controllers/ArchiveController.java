@@ -23,7 +23,7 @@ public class ArchiveController {
     private final ArchiveService archiveService;
 
     @Autowired
-    public ArchiveController(ArchiveService archiveService, UserRepository userRepository) {
+    public ArchiveController(ArchiveService archiveService) {
         this.archiveService = archiveService;
     }
 
