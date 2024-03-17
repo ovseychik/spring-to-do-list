@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +19,8 @@ public class Task {
     @Lob
     private String text;
     private Boolean isCompleted;
+    @ManyToOne
+    private User user;
 
     public Task() {
         this.isCompleted = false;
@@ -63,5 +66,13 @@ public class Task {
 
     public void setIsCompleted(Boolean completed) {
         isCompleted = completed;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -1,6 +1,7 @@
 package kz.learn.todolist.repository;
 
 import kz.learn.todolist.entity.Task;
+import kz.learn.todolist.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +11,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
+    List<Task> findByUser(User user);
+
     @Transactional
     @Modifying
     @Query("UPDATE Task t SET t.isCompleted = true, t.completedAt=CURRENT_TIMESTAMP  WHERE t.id = :id")
