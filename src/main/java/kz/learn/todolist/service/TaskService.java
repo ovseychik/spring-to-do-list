@@ -29,6 +29,9 @@ public class TaskService {
     }
 
     public Task saveTask(Task task) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findByUsername(userDetails.getUsername());
+        task.setUser(user);
         return taskRepository.save(task);
     }
 
