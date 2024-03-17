@@ -21,12 +21,10 @@ import java.util.List;
 @RequestMapping("/tasks/archive")
 public class ArchiveController {
     private final ArchiveService archiveService;
-    private final UserRepository userRepository;
 
     @Autowired
     public ArchiveController(ArchiveService archiveService, UserRepository userRepository) {
         this.archiveService = archiveService;
-        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -34,13 +32,11 @@ public class ArchiveController {
                                      @RequestParam(value = "date", required = false)
                                      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
                                      LocalDate date) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findByUsername(userDetails.getUsername());
         List<Task> tasks;
         if (date != null) {
-            tasks = archiveService.getCompletedTasksByDate(date, user);
+            tasks = archiveService.getCompletedTasksByDate(date);
         } else {
-            tasks = archiveService.getAllCompletedTasks(user);
+            tasks = archiveService.getAllCompletedTasks();
         }
         model.addAttribute("tasks", tasks);
         return "archive";
