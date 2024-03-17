@@ -19,10 +19,10 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     void markAsCompleted(Long id);
 
     // Working with archive: (1) retrieve all completed tasks; (2) retrieve completed tasks for a certain day
-    @Query("SELECT t FROM Task t WHERE t.isCompleted = true")
-    List<Task> findAllCompleted();
+    @Query("SELECT t FROM Task t WHERE t.isCompleted = true AND t.user = :user")
+    List<Task> findAllCompleted(User user);
 
-    @Query("SELECT t FROM Task t WHERE t.isCompleted = true AND CAST(t.completedAt AS DATE) = :date")
-    List<Task> findAllCompletedByDate(LocalDate date);
+    @Query("SELECT t FROM Task t WHERE t.isCompleted = true AND CAST(t.completedAt AS DATE) = :date AND t.user = :user")
+    List<Task> findAllCompletedByDate(LocalDate date, User user);
 
 }

@@ -1,6 +1,7 @@
 package kz.learn.todolist.service;
 
 import kz.learn.todolist.entity.Task;
+import kz.learn.todolist.entity.User;
 import kz.learn.todolist.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,12 @@ public class ArchiveService {
         this.taskRepository = taskRepository;
     }
 
-    public List<Task> getAllCompletedTasks() {
-        return taskRepository.findAllCompleted();
+    public List<Task> getAllCompletedTasks(User user) {
+        return taskRepository.findAllCompleted(user);
     }
 
-    public List<Task> getCompletedTasksByDate(LocalDate date) {
-        return taskRepository.findAllCompletedByDate(date);
+    public List<Task> getCompletedTasksByDate(LocalDate date, User user) {
+        return taskRepository.findAllCompletedByDate(date, user);
     }
 
 }
