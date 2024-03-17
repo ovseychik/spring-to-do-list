@@ -18,7 +18,15 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        if (!userExists(user.getUsername())) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            return userRepository.save(user);
+        } else {
+            throw new IllegalArgumentException("A user with this username already exists");
+        }
+    }
+
+    public boolean userExists(String username) {
+        return userRepository.existsByUsername(username);
     }
 }
