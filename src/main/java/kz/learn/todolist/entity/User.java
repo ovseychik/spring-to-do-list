@@ -30,6 +30,9 @@ public class User {
     )
     private Set<Authority> authorities;
 
+    public User() {
+        this.enabled = true;
+    }
 
     public Long getId() {
         return id;
