@@ -1,9 +1,12 @@
 package kz.learn.todolist;
 
+import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,7 +17,9 @@ import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 
 import javax.sql.DataSource;
 
@@ -61,7 +66,7 @@ public class SecurityConfig {
         return jdbcUserDetailsManager;
     }
 
-    // h2-console is permitted for debugging only
+    // h2-console is for debugging only
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -81,6 +86,28 @@ public class SecurityConfig {
                         .frameOptions().sameOrigin());
         return http.build();
     }
+
+    // httpBasic auth variant for rest
+/*
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(restAuthenticationEntryPoint()))
+                .authorizeRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers("/login", "/signup", "/h2-console/**").permitAll()
+                        .anyRequest().authenticated())
+                .httpBasic();
+        return http.build();
+    }
+
+    @Bean
+    public BasicAuthenticationEntryPoint restAuthenticationEntryPoint() {
+        BasicAuthenticationEntryPoint entryPoint = new BasicAuthenticationEntryPoint();
+        entryPoint.setRealmName("todolist");
+        return entryPoint;
+    }
+*/
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
