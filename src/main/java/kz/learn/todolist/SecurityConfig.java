@@ -1,6 +1,7 @@
 package kz.learn.todolist;
 
 import kz.learn.todolist.entity.User;
+import kz.learn.todolist.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +20,7 @@ public class SecurityConfig {
     private DataSource dataSource;
 
     @Autowired
-    private User user;
+    private UserDetailsServiceImpl userDetailsService;
 
     // h2-console is permitted for debugging only
     @Bean
@@ -44,13 +45,7 @@ public class SecurityConfig {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        user.setUsername("user1");
-        user.setPassword(passwordEncoder().encode("password"));
-        user.setEnabled(true);
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .withDefaultSchema()
-                .withUser(user);
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
