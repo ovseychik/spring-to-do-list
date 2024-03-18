@@ -1,16 +1,25 @@
 package kz.learn.todolist;
 
-import kz.learn.todolist.service.UserDetailsServiceImpl;
+import kz.learn.todolist.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import javax.sql.DataSource;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    @Autowired
+    private DataSource dataSource;
+
+    @Autowired
+    private User user;
 
     // h2-console is permitted for debugging only
     @Bean
@@ -31,6 +40,17 @@ public class SecurityConfig {
                 .headers(headers -> headers
                         .frameOptions().sameOrigin());
         return http.build();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        user.setUsername("user1");
+        user.setPassword(passwordEncoder().encode("password"));
+        user.setEnabled(true);
+        auth.jdbcAuthentication()
+                .dataSource(dataSource)
+                .withDefaultSchema()
+                .withUser(user);
     }
 
     @Bean
