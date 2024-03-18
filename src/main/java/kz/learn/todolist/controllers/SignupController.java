@@ -1,7 +1,6 @@
 package kz.learn.todolist.controllers;
 
-import kz.learn.todolist.entity.User;
-import kz.learn.todolist.service.UserService;
+import kz.learn.todolist.service.SignupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/signup")
 public class SignupController {
-    private final UserService userService;
+    private final SignupService signupService;
 
     @Autowired
-    public SignupController(UserService userService) {
-        this.userService = userService;
+    public SignupController(SignupService signupService) {
+        this.signupService = signupService;
     }
 
     @GetMapping
@@ -27,11 +26,8 @@ public class SignupController {
 
     @PostMapping
     public String createUser(@RequestParam String username, @RequestParam String password, Model model) {
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
         try {
-            userService.createUser(user);
+            signupService.createUser(username, password);
             return "redirect:/login";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());

@@ -1,13 +1,9 @@
 package kz.learn.todolist.controllers;
 
 import kz.learn.todolist.entity.Task;
-import kz.learn.todolist.entity.User;
-import kz.learn.todolist.repository.UserRepository;
 import kz.learn.todolist.service.ArchiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

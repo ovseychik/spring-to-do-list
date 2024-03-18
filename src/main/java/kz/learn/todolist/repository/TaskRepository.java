@@ -1,7 +1,6 @@
 package kz.learn.todolist.repository;
 
 import kz.learn.todolist.entity.Task;
-import kz.learn.todolist.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    List<Task> findByUser(User user);
+    List<Task> findByUsername(String username);
 
     @Transactional
     @Modifying
@@ -19,10 +18,10 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     void markAsCompleted(Long id);
 
     // Working with archive: (1) retrieve all completed tasks; (2) retrieve completed tasks for a certain day
-    @Query("SELECT t FROM Task t WHERE t.isCompleted = true AND t.user = :user")
-    List<Task> findAllCompleted(User user);
+    @Query("SELECT t FROM Task t WHERE t.isCompleted = true AND t.username = :username")
+    List<Task> findAllCompleted(String username);
 
-    @Query("SELECT t FROM Task t WHERE t.isCompleted = true AND CAST(t.completedAt AS DATE) = :date AND t.user = :user")
-    List<Task> findAllCompletedByDate(LocalDate date, User user);
+    @Query("SELECT t FROM Task t WHERE t.isCompleted = true AND CAST(t.completedAt AS DATE) = :date AND t.username = :username")
+    List<Task> findAllCompletedByDate(LocalDate date, String username);
 
 }

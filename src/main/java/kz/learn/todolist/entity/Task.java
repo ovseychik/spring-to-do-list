@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import org.springframework.security.core.userdetails.User;
 
 import java.time.LocalDateTime;
 
@@ -19,8 +20,7 @@ public class Task {
     @Lob
     private String text;
     private Boolean isCompleted;
-    @ManyToOne
-    private User user;
+    private String username;
 
     public Task() {
         this.isCompleted = false;
@@ -68,11 +68,11 @@ public class Task {
         isCompleted = completed;
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
