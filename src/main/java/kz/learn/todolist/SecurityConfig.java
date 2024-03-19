@@ -82,28 +82,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // httpBasic auth variant for rest
-/*
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .authenticationEntryPoint(restAuthenticationEntryPoint()))
-                .authorizeRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/login", "/signup", "/h2-console/**").permitAll()
-                        .anyRequest().authenticated())
-                .httpBasic();
-        return http.build();
-    }
-
-    @Bean
-    public BasicAuthenticationEntryPoint restAuthenticationEntryPoint() {
-        BasicAuthenticationEntryPoint entryPoint = new BasicAuthenticationEntryPoint();
-        entryPoint.setRealmName("todolist");
-        return entryPoint;
-    }
-*/
-
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
