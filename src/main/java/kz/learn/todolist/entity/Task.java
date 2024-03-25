@@ -18,6 +18,7 @@ public class Task {
     @Lob
     private String text;
     private Boolean isCompleted;
+    private String username;
 
     public Task() {
         this.isCompleted = false;
@@ -63,5 +64,13 @@ public class Task {
 
     public void setIsCompleted(Boolean completed) {
         isCompleted = completed;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
