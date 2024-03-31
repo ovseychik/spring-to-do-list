@@ -38,6 +38,7 @@ jobs:
           USER_PSWD: ${{ secrets.USER_PSWD }}
           ADMIN_NAME: ${{ secrets.ADMIN_NAME }}
           ADMIN_PSWD: ${{ secrets.ADMIN_PSWD }}
+          SSL_PASSWORD: ${{ secrets.SSL_PASSWORD }}
 
       - name: Log in to the Container registry
         uses: docker/login-action@v3.1.0
