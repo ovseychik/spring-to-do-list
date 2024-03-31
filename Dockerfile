@@ -4,8 +4,8 @@ LABEL authors="sergey"
 EXPOSE 8080 443
 
 ARG JAR_FILE=target/*.jar
-ARG SERVER_PATH_FULLCHAIN
-ARG SERVER_PATH_PRIVATE_KEY
+ENV SERVER_PATH_FULLCHAIN=/etc/letsencrypt/live/notes.ovseychik.me/fullchain.pem
+ENV SERVER_PATH_PRIVATE_KEY=/etc/letsencrypt/live/notes.ovseychik.me/privkey.pem
 
 ADD ${JAR_FILE} app.jar
 
