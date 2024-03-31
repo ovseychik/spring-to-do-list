@@ -122,7 +122,7 @@ jobs:
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           passphrase: ${{ secrets.DEPLOY_SSH_KEY_PASSPHRASE }}
           script: |
-            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+            docker pull ${{ env.VERSION }}
             docker run -d -p 443:443                      \
               -e SSL_PASSWORD=${{ secrets.SSL_PASSWORD }} \
               -e ADMIN_NAME=${{ secrets.ADMIN_NAME }}     \
@@ -131,4 +131,4 @@ jobs:
               -e DB_USERNAME=${{ secrets.DB_USERNAME }}   \
               -e USER_NAME=${{ secrets.USER_NAME }}       \
               -e USER_PSWD=${{ secrets.USER_PSWD }}       \
-              ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$VERSION
+              ${{ env.VERSION }}
