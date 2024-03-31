@@ -85,12 +85,17 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-      - name: Extract version
-        id: version
-        run: echo "::set-output name=version::$(echo '${{ steps.meta.outputs.labels }}' | fromJSON | .['org.opencontainers.image.version'])"
 
-    outputs:
-      version: ${{ steps.version.outputs.version }}
+      - name: Store version tag of built container
+        run: |
+          echo '${{ steps.meta.outputs.tags }}' > version.txt
+        shell: bash
+
+      - name: Upload version tag
+        uses: actions/upload-artifact@v4.3.1
+        with:
+          name: version
+          path: version.txt
 
   deploy:
     needs: push-image
@@ -100,6 +105,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Download version tag
+        uses: actions/download-artifact@v4.3.1
+        with:
+          name: version
+
       - name: Deploy to remote server
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -108,7 +118,7 @@ jobs:
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           passphrase: ${{ secrets.DEPLOY_SSH_KEY_PASSPHRASE }}
           script: |
-            VERSION=${{ needs.push-image.outputs.version }}
+            VERSION=$(cat version.txt)
             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$VERSION
             docker run -d -p 443:443                      \
               -e SSL_PASSWORD=${{ secrets.SSL_PASSWORD }} \
