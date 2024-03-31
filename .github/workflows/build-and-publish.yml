@@ -135,3 +135,4 @@ jobs:
               -e USER_NAME=${{ secrets.USER_NAME }}                     \
               -e USER_PSWD=${{ secrets.USER_PSWD }}                     \
               ${{ env.VERSION }}
+            docker image prune -a -f
