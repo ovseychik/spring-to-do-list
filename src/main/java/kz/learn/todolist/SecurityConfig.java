@@ -1,5 +1,6 @@
 package kz.learn.todolist;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,14 +22,37 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    @Value("${spring.datasource.url}")
+    private String datasourceUrl;
+
+    @Value("${spring.datasource.driverClassName}")
+    private String driverClassName;
+
+    @Value("${spring.datasource.username}")
+    private String username;
+
+    @Value("${spring.datasource.password}")
+    private String password;
+
+    @Value("${username1}")
+    private String userNameOne;
+
+    @Value("${userpassword}")
+    private String userPasswordOne;
+
+    @Value("${adminname}")
+    private String adminName;
+
+    @Value("${adminpassword}")
+    private String adminPassword;
 
     @Bean
     DataSource datasource() {
         DataSource dataSource = DataSourceBuilder.create()
-                .driverClassName("org.h2.Driver")
-                .url("jdbc:h2:mem:testdb")
-                .username("todo-app")
-                .password("abc")
+                .driverClassName(driverClassName)
+                .url(datasourceUrl)
+                .username(username)
+                .password(password)
                 .build();
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
         databasePopulator.addScript(new ClassPathResource(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION));
@@ -44,14 +68,14 @@ public class SecurityConfig {
     @Bean
     JdbcUserDetailsManager users(DataSource dataSource, PasswordEncoder encoder) {
         UserDetails admin = User.builder()
-                .username("admin")
-                .password(encoder.encode("password_123"))
+                .username(adminName)
+                .password(encoder.encode(adminPassword))
                 .roles("ADMIN")
                 .build();
 
         UserDetails user = User.builder()
-                .username("user1")
-                .password(encoder.encode("password_123"))
+                .username(userNameOne)
+                .password(encoder.encode(userPasswordOne))
                 .roles("USER")
                 .build();
 
