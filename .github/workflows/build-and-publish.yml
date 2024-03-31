@@ -110,6 +110,10 @@ jobs:
         with:
           name: version
 
+      - name: Set version environment variable
+        id: version
+        run: echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
+
       - name: Deploy to remote server
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -118,8 +122,7 @@ jobs:
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           passphrase: ${{ secrets.DEPLOY_SSH_KEY_PASSPHRASE }}
           script: |
-            VERSION=$(cat version.txt)
-            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$VERSION
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
             docker run -d -p 443:443                      \
               -e SSL_PASSWORD=${{ secrets.SSL_PASSWORD }} \
               -e ADMIN_NAME=${{ secrets.ADMIN_NAME }}     \
