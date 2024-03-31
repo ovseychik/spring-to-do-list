@@ -1,9 +1,15 @@
 FROM openjdk:23-jdk-slim
 LABEL authors="sergey"
 
-EXPOSE 8080
+EXPOSE 8080 443
 
 ARG JAR_FILE=target/*.jar
+ARG SERVER_PATH_FULLCHAIN
+ARG SERVER_PATH_PRIVATE_KEY
+
 ADD ${JAR_FILE} app.jar
+
+COPY ${SERVER_PATH_FULLCHAIN} /app/
+COPY ${SERVER_PATH_PRIVATE_KEY} /app/
 
 ENTRYPOINT ["java","-jar","/app.jar"]
