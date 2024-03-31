@@ -1,12 +1,10 @@
 name: Publish Docker image
 
 on:
-  push:
-    branches:
-      - 'main'
-  pull_request:
-    branches:
-      - 'dev'
+  workflow_run:
+    workflows: ["Build with Maven"]
+    types:
+      - completed
 
 env:
   REGISTRY: ghcr.io
@@ -14,6 +12,7 @@ env:
 
 jobs:
   build-and-push-image:
+    needs: maven-build.build
     runs-on: ubuntu-latest
     permissions:
       contents: read
