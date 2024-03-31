@@ -36,6 +36,7 @@ jobs:
           ADMIN_NAME: ${{ secrets.ADMIN_NAME }}
           ADMIN_PSWD: ${{ secrets.ADMIN_PSWD }}
           SSL_PASSWORD: ${{ secrets.SSL_PASSWORD }}
+
   push-image:
     needs: build
     runs-on: ubuntu-latest
@@ -84,6 +85,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
   deploy:
     needs: push-image
     runs-on: ubuntu-latest
@@ -100,7 +102,9 @@ jobs:
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           passphrase: ${{ secrets.DEPLOY_SSH_KEY_PASSPHRASE }}
           script: |
-            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}
+            LABELS=${{ steps.meta.outputs.labels }}
+            VERSION=$(echo $LABELS | jq -r '.["org.opencontainers.image.version"]')
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$VERSION
             docker run -d -p 443:443                      \
               -e SSL_PASSWORD=${{ secrets.SSL_PASSWORD }} \
               -e ADMIN_NAME=${{ secrets.ADMIN_NAME }}     \
@@ -109,4 +113,4 @@ jobs:
               -e DB_USERNAME=${{ secrets.DB_USERNAME }}   \
               -e USER_NAME=${{ secrets.USER_NAME }}       \
               -e USER_PSWD=${{ secrets.USER_PSWD }}       \
-              ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}
+              ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$VERSION
