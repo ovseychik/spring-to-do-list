@@ -59,6 +59,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            SERVER_PATH_FULLCHAIN: ${{ secrets.SERVER_PATH_FULLCHAIN }}
-            SERVER_PATH_PRIVATE_KEY: ${{ secrets.SERVER_PATH_PRIVATE_KEY }}
