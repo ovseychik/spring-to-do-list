@@ -124,6 +124,7 @@ jobs:
           script: |
             docker pull ${{ env.VERSION }}
             docker run -d -p 443:443                      \
+              -v ${{ secrets.SERVER_SSL_DIRECTORY }}:/app/keystore.p12
               -e SSL_PASSWORD=${{ secrets.SSL_PASSWORD }} \
               -e ADMIN_NAME=${{ secrets.ADMIN_NAME }}     \
               -e ADMIN_PSWD=${{ secrets.ADMIN_PSWD }}     \
