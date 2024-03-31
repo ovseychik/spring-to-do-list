@@ -100,6 +100,8 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login"))
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/h2-console/**"))
+                .requiresChannel(channel -> channel
+                        .anyRequest().requiresSecure())
                 // to be able to render h2 console
                 .headers(headers -> headers
                         .frameOptions().sameOrigin());
