@@ -85,8 +85,12 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      - name: Extract version
+        id: version
+        run: echo "::set-output name=version::$(echo '${{ steps.meta.outputs.labels }}' | fromJSON | .['org.opencontainers.image.version'])"
+
     outputs:
-      version: ${{ steps.meta.outputs.labels['org.opencontainers.image.version'] }}
+      version: ${{ steps.version.outputs.version }}
 
   deploy:
     needs: push-image
