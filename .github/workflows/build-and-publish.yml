@@ -132,7 +132,6 @@ jobs:
               -v ${{ secrets.SERVER_DB_DIRECTORY }}:/app/database/      \
               -e SPRING_PROFILES_ACTIVE=prod                            \
               -e SSL_PASSWORD=${{ secrets.SSL_PASSWORD }}               \
-              -e SERVER_DB_DIRECTORY=${{ secrets.SERVER_DB_DIRECTORY }} \
               -e ADMIN_NAME=${{ secrets.ADMIN_NAME }}                   \
               -e ADMIN_PSWD=${{ secrets.ADMIN_PSWD }}                   \
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }}                 \
