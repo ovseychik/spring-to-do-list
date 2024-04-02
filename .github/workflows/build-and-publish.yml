@@ -27,7 +27,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B package --file pom.xml -Dspring.config.name=application-ci
         env:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
@@ -56,7 +56,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B package --file pom.xml -Dspring.config.name=application-ci
         env:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
@@ -130,6 +130,7 @@ jobs:
             docker run -d -p 443:443 --name luxury_notes                \
               -v ${{ secrets.SERVER_SSL_DIRECTORY }}:/app/keystore.p12  \
               -v ${{ secrets.SERVER_DB_DIRECTORY }}:/app/database/      \
+              -e SPRING_PROFILES_ACTIVE=prod                            \
               -e SSL_PASSWORD=${{ secrets.SSL_PASSWORD }}               \
               -e SERVER_DB_DIRECTORY=${{ secrets.SERVER_DB_DIRECTORY }} \
               -e ADMIN_NAME=${{ secrets.ADMIN_NAME }}                   \
