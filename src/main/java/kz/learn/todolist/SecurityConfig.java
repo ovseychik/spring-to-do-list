@@ -54,14 +54,6 @@ public class SecurityConfig {
                 .username(username)
                 .password(password)
                 .build();
-        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
-        databasePopulator.addScript(new ClassPathResource(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION));
-
-        DataSourceInitializer initializer = new DataSourceInitializer();
-        initializer.setDataSource(dataSource);
-        initializer.setDatabasePopulator(databasePopulator);
-        initializer.afterPropertiesSet();
-
         return dataSource;
     }
 
@@ -80,8 +72,12 @@ public class SecurityConfig {
                 .build();
 
         JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-        jdbcUserDetailsManager.createUser(admin);
-        jdbcUserDetailsManager.createUser(user);
+        if (!jdbcUserDetailsManager.userExists(admin.getUsername())) {
+            jdbcUserDetailsManager.createUser(admin);
+        }
+        if (!jdbcUserDetailsManager.userExists(user.getUsername())) {
+            jdbcUserDetailsManager.createUser(user);
+        }
         return jdbcUserDetailsManager;
     }
 
