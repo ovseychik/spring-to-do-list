@@ -4,14 +4,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
@@ -46,7 +42,7 @@ public class SecurityConfig {
     @Value("${adminpassword}")
     private String adminPassword;
 
-    @Bean
+   /* @Bean
     DataSource datasource() {
         DataSource dataSource = DataSourceBuilder.create()
                 .driverClassName(driverClassName)
@@ -54,17 +50,9 @@ public class SecurityConfig {
                 .username(username)
                 .password(password)
                 .build();
-        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
-        databasePopulator.addScript(new ClassPathResource(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION));
-
-        DataSourceInitializer initializer = new DataSourceInitializer();
-        initializer.setDataSource(dataSource);
-        initializer.setDatabasePopulator(databasePopulator);
-        initializer.afterPropertiesSet();
-
         return dataSource;
     }
-
+*/
     @Bean
     JdbcUserDetailsManager users(DataSource dataSource, PasswordEncoder encoder) {
         UserDetails admin = User.builder()
@@ -80,8 +68,12 @@ public class SecurityConfig {
                 .build();
 
         JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-        jdbcUserDetailsManager.createUser(admin);
-        jdbcUserDetailsManager.createUser(user);
+        if (!jdbcUserDetailsManager.userExists(admin.getUsername())) {
+            jdbcUserDetailsManager.createUser(admin);
+        }
+        if (!jdbcUserDetailsManager.userExists(user.getUsername())) {
+            jdbcUserDetailsManager.createUser(user);
+        }
         return jdbcUserDetailsManager;
     }
 

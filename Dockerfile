@@ -1,5 +1,6 @@
 FROM openjdk:23-jdk-slim
 LABEL authors="sergey"
+ENV SPRING_PROFILES_ACTIVE=prod
 
 EXPOSE 8080 443
 
