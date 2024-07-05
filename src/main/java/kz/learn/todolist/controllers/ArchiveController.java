@@ -16,7 +16,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/tasks/archive")
 public class ArchiveController {
-
     private final ArchiveService archiveService;
 
     @Autowired

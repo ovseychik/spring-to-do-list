@@ -10,6 +10,11 @@
     </style>
 </head>
 <body>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Logout"/>
+</form>
+<br>
+
 <a href="/tasks">Tasks</a>
 
 <h1>Completed Tasks</h1>
@@ -29,7 +34,7 @@
     <tbody>
     <br>
     <tr th:each="task : ${tasks}">
-        <td th:text="${task.completedAt}"></td>
+        <td th:text="${#temporals.format(task.completedAt, 'dd.MM.yyyy HH:mm:ss')}"></td>
         <td th:text="${task.text}"></td>
     </tr>
     </tbody>
